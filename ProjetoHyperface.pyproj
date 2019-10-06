@@ -1,0 +1,51 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>cea07963-cb66-4948-ab89-906dbf76ef55</ProjectGuid>
+    <ProjectHome>.</ProjectHome>
+    <StartupFile>scripts\train.py</StartupFile>
+    <SearchPath>
+    </SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <Name>ProjetoHyperface</Name>
+    <RootNamespace>ProjetoHyperface</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="scripts\common.py" />
+    <Compile Include="scripts\config.py" />
+    <Compile Include="scripts\datasets.py" />
+    <Compile Include="scripts\demo_live.py" />
+    <Compile Include="scripts\demo_on_test.py" />
+    <Compile Include="scripts\drawing.py" />
+    <Compile Include="scripts\hyperface.py" />
+    <Compile Include="scripts\imgviewer_conversions.py" />
+    <Compile Include="scripts\log_initializer.py" />
+    <Compile Include="scripts\models.py" />
+    <Compile Include="scripts\train.py" />
+    <Compile Include="scripts\use_on_cap.py" />
+    <Compile Include="scripts\use_on_file.py" />
+    <Compile Include="scripts\use_on_test.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="scripts\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
+  <!-- Uncomment the CoreCompile target to enable the Build command in
+       Visual Studio and specify your pre- and post-build commands in
+       the BeforeBuild and AfterBuild targets below. -->
+  <!--<Target Name="CoreCompile" />-->
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+</Project>
