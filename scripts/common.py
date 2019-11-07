@@ -29,7 +29,7 @@ def _scale_down_image(img, max_img_size):
 
 def selective_search_dlib(img, max_img_size=(500, 500),
                           kvals=(50, 200, 2), min_size=2200, check=True,
-                          debug_window=False):
+                          debug_window=True):
     if debug_window:
         org_img = img
     org_h, org_w = img.shape[0:2]

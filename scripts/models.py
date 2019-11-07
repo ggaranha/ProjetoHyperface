@@ -15,7 +15,8 @@ IMG_SIZE = (227, 227)
 
 
 def _disconnect(x):
-    return chainer.Variable(x.data, volatile=x.volatile)
+    ret = chainer.Variable(x)
+    return ret
 
 
 def copy_layers(src_model, dst_model,
@@ -109,13 +110,13 @@ class HyperFaceModel(chainer.Chain):
 
             # Masking
             h_landmark *= _disconnect(m_landmark)
-            t_landmark *= _disconnect(m_landmark)
-            h_landmark *= _disconnect(m_landmark_ew)
-            t_landmark *= _disconnect(m_landmark_ew)
+            t_landmark *= m_landmark
+            h_landmark *= m_landmark_ew
+            t_landmark *= m_landmark_ew.array
             h_visibility *= _disconnect(m_visibility)
-            t_visibility *= _disconnect(m_visibility)
+            t_visibility *= m_visibility
             h_pose *= _disconnect(m_pose)
-            t_pose *= _disconnect(m_pose)
+            t_pose *= m_pose
 
             # Loss
             loss_detection = F.softmax_cross_entropy(h_detection, t_detection)
