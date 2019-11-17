@@ -48,25 +48,7 @@ def _draw_cross(img, pt, color, size=4, thickness=2):
     _draw_line(img, p2, p3, color, thickness)
 
 
-def _rotation_matrix(rad_x, rad_y, rad_z):
-    cosx, cosy, cosz = math.cos(rad_x), math.cos(rad_y), math.cos(rad_z)
-    sinx, siny, sinz = math.sin(rad_x), math.sin(rad_y), math.sin(rad_z)
-    rotz = np.array([[cosz, -sinz, 0],
-                     [sinz, cosz, 0],
-                     [0, 0, 1]], dtype=np.float32)
-    roty = np.array([[cosy, 0, siny],
-                     [0, 1, 0],
-                     [-siny, 0, cosy]], dtype=np.float32)
-    rotx = np.array([[1, 0, 0],
-                     [0, cosx, -sinx],
-                     [0, sinx, cosx]], dtype=np.float32)
-    return rotx.dot(roty).dot(rotz)
 
-
-def _project_plane_yz(vec):
-    x = vec.dot(np.array([0, 1, 0], dtype=np.float32))
-    y = vec.dot(np.array([0, 0, 1], dtype=np.float32))
-    return np.array([x, -y], dtype=np.float32)  # y flip
 
 
 def draw_detection(img, detection, size=15):
@@ -132,21 +114,65 @@ def draw_landmark(img, landmark, visibility, color, line_color_scale,
             _draw_circle(img, pt, color, 4, 1)
 
 
+def _rotation_matrix(rad_x, rad_y, rad_z):
+    # Generate the rotation matrix
+    cosx, cosy, cosz = math.cos(rad_x), math.cos(rad_y), math.cos(rad_z)
+    sinx, siny, sinz = math.sin(rad_x), math.sin(rad_y), math.sin(rad_z)
+    rotz = np.array([[cosz, -sinz, 0],
+                     [sinz, cosz, 0],
+                     [0, 0, 1]], dtype=np.float32)
+    roty = np.array([[cosy, 0, siny],
+                     [0, 1, 0],
+                     [-siny, 0, cosy]], dtype=np.float32)
+    rotx = np.array([[1, 0, 0],
+                     [0, cosx, -sinx],
+                     [0, sinx, cosx]], dtype=np.float32)
+    return rotx.dot(roty).dot(rotz)
+
+
+def _project_plane_yz_x(vec):
+    x = vec.dot(np.array([0, 1, 0], dtype=np.float32))
+    y = vec.dot(np.array([0, 0, 1], dtype=np.float32))
+    #return np.array([x, y], dtype=np.float32)  # y flip
+    return np.array([x, y], dtype=np.float32)  # y flip
+
+def _project_plane_yz(vec):
+    x = vec.dot(np.array([0, 1, 0], dtype=np.float32))
+    y = vec.dot(np.array([0, 0, 1], dtype=np.float32))
+    #return np.array([x, y], dtype=np.float32)  # y flip
+    return np.array([x, -y], dtype=np.float32)  # y flip
+
+def _project_plane_yz_z(vec):
+    x = vec.dot(np.array([0, 1, 0], dtype=np.float32))
+    y = vec.dot(np.array([0, 0, 1], dtype=np.float32))
+    #return np.array([x, y], dtype=np.float32)  # y flip
+    return np.array([-x, -y], dtype=np.float32)  # y flip
+
 def draw_pose(img, pose, size=30, idx=0):
     # parallel projection (something wrong?)
     rotmat = _rotation_matrix(-pose[0], -pose[1], -pose[2])
     zvec = np.array([0, 0, 1], np.float32)
     yvec = np.array([0, 1, 0], np.float32)
     xvec = np.array([1, 0, 0], np.float32)
-    zvec = _project_plane_yz(rotmat.dot(zvec))
-    yvec = _project_plane_yz(rotmat.dot(yvec))
+    zvec = _project_plane_yz_z(rotmat.dot(zvec))
+    yvec = _project_plane_yz_x(rotmat.dot(yvec))
     xvec = _project_plane_yz(rotmat.dot(xvec))
+    #zvec = _project_plane_yz(rotmat.dot(zvec))
+    #yvec = _project_plane_yz(rotmat.dot(yvec))
+    #xvec = _project_plane_yz(rotmat.dot(xvec))
 
+    
+    #cv2.putText(img, str(pose[0]), (10,600), color=(0,0,255), thickness=4, fontFace=cv2.FONT_HERSHEY_PLAIN, fontScale=1)
+    cv2.rectangle(img, (8,img.shape[1] - 170), (70,img.shape[1] - 135), color=(0,0,0), thickness = -1)
+    
+    cv2.putText(img, ("x=%d°" % math.degrees(pose[0])), (10,img.shape[1] - 160), color=(255,255,255), thickness=1, fontFace=cv2.FONT_HERSHEY_PLAIN, fontScale=0.6)
+    cv2.putText(img, ("y=%d°" % math.degrees(pose[2])), (10,img.shape[1] - 150), color=(255,255,255), thickness=1, fontFace=cv2.FONT_HERSHEY_PLAIN, fontScale=0.6)
+    cv2.putText(img, ("z=%d°" % math.degrees(pose[1])), (10,img.shape[1] - 140), color=(255,255,255), thickness=1, fontFace=cv2.FONT_HERSHEY_PLAIN, fontScale=0.6)
     # Lower left
     org_pt = ((size + 5) * (2 * idx + 1), img.shape[0] - size - 5)
-    _draw_line(img, org_pt, org_pt + zvec * size, (1, 0, 0), 3)
-    _draw_line(img, org_pt, org_pt + yvec * size, (0, 1, 0), 3)
-    _draw_line(img, org_pt, org_pt + xvec * size, (0, 0, 1), 3)
+    _draw_line(img, org_pt, org_pt + zvec * size, (1, 0, 0), 3) #z
+    _draw_line(img, org_pt, org_pt + yvec * size, (0, 1, 0), 3) #x
+    _draw_line(img, org_pt, org_pt + xvec * size, (0, 0, 1), 3) #y
 
 
 def draw_gender(img, gender, size=7, idx=0):

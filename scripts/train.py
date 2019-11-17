@@ -70,9 +70,7 @@ if __name__ == '__main__':
             # Initialize using caffemodel
             logger.info('Overwrite conv layers using caffemodel "{}"'
                         .format(config.alexnet_caffemodel_path))
-            logger.info('test')
             caffe_model = CaffeFunction(config.alexnet_caffemodel_path)
-            logger.info('test2')
             copy_layers(caffe_model, model)
         elif not args.pretrain and args.pretrainedmodel:
             # Initialize using pretrained model

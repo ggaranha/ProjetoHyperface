@@ -6,6 +6,9 @@
 *.user
 *.userosscache
 *.sln.docstates
+aflw_cache.npz
+model_epoch_170
+snapshot_epoch_170
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
@@ -261,3 +264,4 @@ __pycache__/
 *.pyc
 /result
 /result_pretrain
+

@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>cea07963-cb66-4948-ab89-906dbf76ef55</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>scripts\train.py</StartupFile>
+    <StartupFile>scripts\use_on_cap.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -13,7 +13,7 @@
     <RootNamespace>ProjetoHyperface</RootNamespace>
     <IsWindowsApplication>False</IsWindowsApplication>
     <LaunchProvider>Standard Python launcher</LaunchProvider>
-    <CommandLineArguments>--pretrain</CommandLineArguments>
+    <CommandLineArguments>--model model_epoch_170</CommandLineArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
     <InterpreterId>Global|PythonCore|3.7</InterpreterId>
   </PropertyGroup>
@@ -32,6 +32,11 @@
     <Compile Include="scripts\demo_live.py" />
     <Compile Include="scripts\demo_on_test.py" />
     <Compile Include="scripts\drawing.py" />
+    <Compile Include="scripts\extensions\imgviewer\app.py" />
+    <Compile Include="scripts\extensions\imgviewer\__init__.py" />
+    <Compile Include="scripts\extensions\imgviewer_extension.py" />
+    <Compile Include="scripts\extensions\sequential_evaluator.py" />
+    <Compile Include="scripts\extensions\__init__.py" />
     <Compile Include="scripts\hyperface.py" />
     <Compile Include="scripts\imgviewer_conversions.py" />
     <Compile Include="scripts\log_initializer.py" />
@@ -43,10 +48,16 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="scripts\" />
+    <Folder Include="scripts\extensions\" />
+    <Folder Include="scripts\extensions\imgviewer\" />
+    <Folder Include="scripts\extensions\imgviewer\static\" />
+    <Folder Include="scripts\extensions\imgviewer\templates\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="config.json" />
     <Content Include="LICENSE.txt" />
+    <Content Include="scripts\extensions\imgviewer\static\index.js" />
+    <Content Include="scripts\extensions\imgviewer\templates\index.html" />
   </ItemGroup>
   <ItemGroup>
     <InterpreterReference Include="Global|PythonCore|3.7" />
