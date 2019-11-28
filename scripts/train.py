@@ -14,8 +14,6 @@ import log_initializer
 
 import config
 import datasets
-#from extensions import ImgViewerExtention
-#from extensions import SequentialEvaluator
 from imgviewer_conversions import face_img_func, weights_img_func
 from imgviewer_conversions import lossgraph_entry_func, lossgraph_img_func
 import models
@@ -143,29 +141,6 @@ if __name__ == '__main__':
         trigger=log_interval)
     trainer.extend(extensions.ProgressBar(
         update_interval=progressbar_interval))
-
-    ## My extensions
-    ## Sequential Evaluator
-    #trainer.extend(
-    #    SequentialEvaluator(test_iter, eval_model, device=config.gpu),
-    #    trigger=test_interval)  # Sequential evaluation for imgviewer in test
-    ## Image Viewer for Faces
-    #trainer.extend(ImgViewerExtention(
-    #    ['main/predict', 'main/teacher', 'validation/main/predict',
-    #     'validation/main/teacher'], n_imgs=[20, 20, 10, 10],
-    #    port=config.port_face, image_func=face_img_func),
-    #    trigger=imgview_face_interval)
-    ## Image Viewer for weights
-    #trainer.extend(ImgViewerExtention(
-    #    ['main/conv1_w', 'main/conv2_w', 'main/conv3_w', 'main/conv4_w',
-    #     'main/conv5_w', ], n_imgs=[96, 0, 0, 0, 0],
-    #    port=config.port_weight, image_func=weights_img_func),
-    #    trigger=imgview_weight_interval)
-    ### Image Viewer for loss graph
-    #trainer.extend(ImgViewerExtention(
-    #    ['lossgraph'], n_imgs=[1] if args.pretrain else [1 + 5],
-    #    port=config.port_lossgraph, entry_func=lossgraph_entry_func,
-    #    image_func=lossgraph_img_func), trigger=log_interval)
 
     # Resume
     if args.resume:

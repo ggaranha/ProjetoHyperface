@@ -14,6 +14,8 @@ import drawing
 import log_initializer
 import models
 
+import time
+
 # logging
 from logging import getLogger, DEBUG
 log_initializer.setFmt()
@@ -119,4 +121,5 @@ if __name__ == '__main__':
         drawing.draw_gender(img, gender)
 
         cv2.imshow('img', img)
+        #time.sleep(0.1)
         cv2.waitKey(1)

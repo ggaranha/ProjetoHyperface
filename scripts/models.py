@@ -78,27 +78,21 @@ class HyperFaceModel(chainer.Chain):
         # Fusion CNN
         h = F.relu(self.conv_all(h))  # conv_all
         h = F.relu(self.fc_full(h))  # fc_full
-        #h = F.dropout(h, train=self.train)
         h = F.dropout(h)
 
         h_detection = F.relu(self.fc_detection1(h))
-        #h_detection = F.dropout(h_detection, train=self.train)
         h_detection = F.dropout(h_detection)
         h_detection = self.fc_detection2(h_detection)
         h_landmark = F.relu(self.fc_landmarks1(h))
-        #h_landmark = F.dropout(h_landmark, train=self.train)
         h_landmark = F.dropout(h_landmark)
         h_landmark = self.fc_landmarks2(h_landmark)
         h_visibility = F.relu(self.fc_visibility1(h))
-        #h_visibility = F.dropout(h_visibility, train=self.train)
         h_visibility = F.dropout(h_visibility)
         h_visibility = self.fc_visibility2(h_visibility)
         h_pose = F.relu(self.fc_pose1(h))
-        #h_pose = F.dropout(h_pose, train=self.train)
         h_pose = F.dropout(h_pose)
         h_pose = self.fc_pose2(h_pose)
         h_gender = F.relu(self.fc_gender1(h))
-        #h_gender = F.dropout(h_gender, train=self.train)
         h_gender = F.dropout(h_gender)
         h_gender = self.fc_gender2(h_gender)
 
@@ -202,9 +196,7 @@ class RCNNFaceModel(chainer.Chain):
         h = F.relu(self.conv5(h))  # conv5
         h = F.max_pooling_2d(h, 3, stride=2, pad=0)  # pool5
 
-        # h = F.dropout(F.relu(self.fc6(h)), train=self.train)  # fc6
         h = F.dropout(F.relu(self.fc6(h))) # fc6
-        # h = F.dropout(F.relu(self.fc7(h)), train=self.train)  # fc7
         h = F.dropout(F.relu(self.fc7(h))) # fc7
         h_detection = self.fc8(h)  # fc8
 

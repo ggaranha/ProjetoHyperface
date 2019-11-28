@@ -163,11 +163,11 @@ def draw_pose(img, pose, size=30, idx=0):
 
     
     #cv2.putText(img, str(pose[0]), (10,600), color=(0,0,255), thickness=4, fontFace=cv2.FONT_HERSHEY_PLAIN, fontScale=1)
-    cv2.rectangle(img, (8,img.shape[1] - 170), (70,img.shape[1] - 135), color=(0,0,0), thickness = -1)
+    #cv2.rectangle(img, (8,img.shape[1] - 170), (70,img.shape[1] - 135), color=(0,0,0), thickness = -1)
     
-    cv2.putText(img, ("x=%d°" % math.degrees(pose[0])), (10,img.shape[1] - 160), color=(255,255,255), thickness=1, fontFace=cv2.FONT_HERSHEY_PLAIN, fontScale=0.6)
-    cv2.putText(img, ("y=%d°" % math.degrees(pose[2])), (10,img.shape[1] - 150), color=(255,255,255), thickness=1, fontFace=cv2.FONT_HERSHEY_PLAIN, fontScale=0.6)
-    cv2.putText(img, ("z=%d°" % math.degrees(pose[1])), (10,img.shape[1] - 140), color=(255,255,255), thickness=1, fontFace=cv2.FONT_HERSHEY_PLAIN, fontScale=0.6)
+    #cv2.putText(img, ("x=%d°" % math.degrees(pose[0])), (10,img.shape[1] - 160), color=(255,255,255), thickness=1, fontFace=cv2.FONT_HERSHEY_PLAIN, fontScale=0.6)
+    #cv2.putText(img, ("y=%d°" % math.degrees(pose[1])), (10,img.shape[1] - 150), color=(255,255,255), thickness=1, fontFace=cv2.FONT_HERSHEY_PLAIN, fontScale=0.6)
+    #cv2.putText(img, ("z=%d°" % math.degrees(pose[2])), (10,img.shape[1] - 140), color=(255,255,255), thickness=1, fontFace=cv2.FONT_HERSHEY_PLAIN, fontScale=0.6)
     # Lower left
     org_pt = ((size + 5) * (2 * idx + 1), img.shape[0] - size - 5)
     _draw_line(img, org_pt, org_pt + zvec * size, (1, 0, 0), 3) #z
@@ -189,65 +189,3 @@ def draw_gender_rect(img, gender, rect):
         _draw_rect(img, rect, (1.0, 0.3, 0.3))  # male
     elif gender == 1:
         _draw_rect(img, rect, (0.3, 0.3, 1.0))  # female
-
-
-def draw_loss_graph(train_loss_list, test_loss_list, train_epoch_list=None,
-                    test_epoch_list=None, train_color='blue', test_color='red',
-                    legend_loc='upper right', title=None):
-    # Axis data
-    # Losses
-    train_loss = np.asarray(train_loss_list)
-    test_loss = np.asarray(test_loss_list)
-    # Epochs
-    if train_epoch_list:
-        train_epoch = np.asarray(train_epoch_list)
-    else:
-        train_epoch = np.arange(0, len(train_loss_list))
-    if test_epoch_list:
-        test_epoch = np.asarray(test_epoch_list)
-    else:
-        test_epoch = np.arange(0, len(test_loss_list))
-
-    # Create new figure
-    plt.clf()
-    fig, ax = plt.subplots()
-    ax.plot(train_epoch, train_loss, label='train', color=train_color)
-    ax.plot(test_epoch, test_loss, label='test', color=test_color)
-
-    def draw_annotate(label, x, y, color):
-        ax.scatter(x, y, 20, color=color)
-        ax.annotate(label, xy=(x, y), xytext=(+20, +10),
-                    textcoords='offset points',
-                    arrowprops={'arrowstyle': '->',
-                                'connectionstyle': 'arc3,rad=.2'})
-
-    # Show min values
-    if train_loss.shape[0] > 0:
-        min_idx = np.argmin(train_loss)
-        x, y = train_epoch[min_idx], train_loss[min_idx]
-        draw_annotate('min train loss: %0.3f' % y, x, y, train_color)
-    if test_loss.shape[0] > 0:
-        min_idx = np.argmin(test_loss)
-        x, y = test_epoch[min_idx], test_loss[min_idx]
-        draw_annotate('min test loss: %0.3f' % y, x, y, test_color)
-
-    # Settings
-    ax.set_xlabel("epoch")
-    ax.set_ylabel("loss rate")
-    ax.set_xlim(left=0)
-    ax.set_ylim(bottom=0)
-    ax.legend(loc=legend_loc)
-    if title is not None:
-        ax.set_title(title)
-
-    # Draw
-    canvas = agg.FigureCanvasAgg(fig)
-    canvas.draw()
-    renderer = canvas.get_renderer()
-    img = np.fromstring(renderer.tostring_rgb(), dtype=np.uint8, sep='')
-    img = img.reshape(canvas.get_width_height()[::-1] + (3,))
-
-    # Close
-    plt.close('all')
-
-    return img

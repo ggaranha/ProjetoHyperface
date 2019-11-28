@@ -7,7 +7,6 @@ import six
 
 import common
 import datasets
-# import drawing
 import models
 
 # logging

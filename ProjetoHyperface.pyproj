@@ -4,7 +4,8 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>cea07963-cb66-4948-ab89-906dbf76ef55</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>scripts\use_on_cap.py</StartupFile>
+    <StartupFile>
+    </StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -29,13 +30,10 @@
     <Compile Include="scripts\common.py" />
     <Compile Include="scripts\config.py" />
     <Compile Include="scripts\datasets.py" />
-    <Compile Include="scripts\demo_live.py" />
-    <Compile Include="scripts\demo_on_test.py" />
     <Compile Include="scripts\drawing.py" />
     <Compile Include="scripts\extensions\imgviewer\app.py" />
     <Compile Include="scripts\extensions\imgviewer\__init__.py" />
     <Compile Include="scripts\extensions\imgviewer_extension.py" />
-    <Compile Include="scripts\extensions\sequential_evaluator.py" />
     <Compile Include="scripts\extensions\__init__.py" />
     <Compile Include="scripts\hyperface.py" />
     <Compile Include="scripts\imgviewer_conversions.py" />

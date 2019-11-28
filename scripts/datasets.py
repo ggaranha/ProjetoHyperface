@@ -438,15 +438,6 @@ def setup_aflw(cache_path, sqlite_path=None, image_dir=None, test_rate=0.04,
 
     return train, test
 
-def drawLine(img, pt1, pt2, color, thickness):
-    cv2.line(img, pt1, pt2, color, int(thickness))
-
-def drawCircle(img, pt, color, radius, thickness):
-    cv2.line(img, pt1, pt2, color, int(thickness))
-
-def drawRect(img, p1, p2, color, thickness):
-    cv2.rectangle(img, p1, p2, color, thickness)
-
 
 def aflw_template_landmark():
     ''' Template landmark from AFLW dataset '''
