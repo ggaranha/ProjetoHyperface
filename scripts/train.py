@@ -15,7 +15,6 @@ import log_initializer
 import config
 import datasets
 from imgviewer_conversions import face_img_func, weights_img_func
-from imgviewer_conversions import lossgraph_entry_func, lossgraph_img_func
 import models
 from models import copy_layers
 
@@ -92,14 +91,10 @@ if __name__ == '__main__':
     optimizer.setup(model)
 
     # Setup iterators
-    # (test_iter needs repeat because of SequentialEvaluator())
-    logger.info('Setup train and test iterators (n_loaders: {}, {})'
+    logger.info('Setup train iterators (n_loaders: {})'
                 .format(config.n_loaders_train, config.n_loaders_test))
     train_iter = iterators.MultiprocessIterator(train, config.batchsize, True,
                                                 True, config.n_loaders_train)
-    test_iter = iterators.MultiprocessIterator(test, config.batchsize, True,
-                                               True, config.n_loaders_test)
-
     # Setup a updater
     logger.info('Setup an updater (GPU: {})'.format(config.gpu))
     updater = training.StandardUpdater(

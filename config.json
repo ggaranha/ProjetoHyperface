@@ -6,14 +6,9 @@
     "alexnet_caffemodel_path": "D:/Documents/Hyperface/caffemodel/bvlc_alexnet.caffemodel",
     "gpu": 0,
     "n_loaders_train": 7,
-    "n_loaders_test": 1,
     "n_epoch": 1000,
     "batchsize": 64,
-    "port_face": 8888,
-    "port_weight": 8889,
-    "port_lossgraph": 8890,
     "port_evaluate": 8891,
-    "port_demo": 9000,
     "outdir": "result",
     "outdir_pretrain": "result_pretrain"
 }
